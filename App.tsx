@@ -1,20 +1,74 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Text, SafeAreaView} from 'react-native';
+import Menu from './components/Menu';
+import TodoList from './components/Todo-list';
+import ITodo from './models/Itodo.model';
+import EditTodoView from './views/EditTodo.view';
+import axios from 'axios';
+import CookieManager from '@react-native-cookies/cookies';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+
+    const [data, setData] = useState<ITodo[]>([])
+    const [isEditTodoVisible, setIsEditTodoVisible] = useState(false)
+
+    useEffect(() => {
+        axios.post('https://767c-85-201-62-18.ngrok-free.app/Auth/login', {
+            email: 'test@test.com',
+            password: 'Password'
+        }, {
+            headers: {
+                'Accept': 'text/plain',
+                'Content-Type': 'application/json',
+            },
+        }).then((res) => {
+            CookieManager.set('JWT', res.data.token);
+        }).catch((err) => {
+                console.log(err);
+            }
+        )
+    }, [])
+
+    const onAddTodo = () => {
+        setIsEditTodoVisible(true)
+    }
+
+    const onCloseEditTodo = () => {
+        setIsEditTodoVisible(false)
+    }
+
+    const onSaveTodo = (d: ITodo) => {
+        console.log(d);
+        setData((data) => [...data, d])
+        setIsEditTodoVisible(false)
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <Text style={styles.title}>ToDo</Text>
+            <TodoList data={data}/>
+            <Menu onAddTodo={onAddTodo}/>
+
+            <EditTodoView isVisible={isEditTodoVisible}
+                          onClose={onCloseEditTodo}
+                          onSave={onSaveTodo}
+            />
+        </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        height: '90%',
+        width: '100%',
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        padding: 20,
+        paddingBottom: 0,
+    },
 });
