@@ -7,11 +7,14 @@ import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
 import * as React from 'react';
 import {useEffect, useState} from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import 'react-native-gesture-handler';
+
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-
     const [isSignedIn, setIsSignedIn] = useState(false);
 
     useEffect(() => {
@@ -26,17 +29,18 @@ export default function App() {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator>
-                {isSignedIn ? (
-                    <>
-                        <Stack.Screen name="Home" component={HomeScreen}/>
-                    </>
+            {
+                isSignedIn ? (
+                    <Tab.Navigator>
+                        <Tab.Screen name="Home" component={HomeScreen}/>
+                        <Tab.Screen name="Test" component={HomeScreen}/>
+                    </Tab.Navigator>
                 ) : (
-                    <>
-                        <Stack.Screen name="SignIn" component={SignInScreen}/>
-                    </>
-                )}
-            </Stack.Navigator>
+                    <Stack.Navigator>
+                        <Stack.Screen name="SignIn" component={SignInScreen} options={{headerShown: false}}/>
+                    </Stack.Navigator>
+                )
+            }
         </NavigationContainer>
     );
 
