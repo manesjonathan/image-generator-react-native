@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { StyleSheet, FlatList } from 'react-native';
+import React from "react";
+import {FlatList, StyleSheet} from 'react-native';
 import ITodo from "../models/ITodo.model";
 import Todo from "./Todo";
 
 interface ITodoListProps {
-    data: ITodo[]
+    data: ITodo[],
+    token: string
 }
 
 const TodoList = (props: ITodoListProps) => {
-    const [isDone, setDone] = useState(false);
-
     return (
         <FlatList
             style={styles.container}
@@ -17,7 +16,7 @@ const TodoList = (props: ITodoListProps) => {
             renderItem={
                 (item: any) => {
                     return (
-                        <Todo data={item.item} />
+                        <Todo data={item.item}/>
                     )
                 }
             }
@@ -37,4 +36,8 @@ const styles = StyleSheet.create({
         padding: 10,
         overflow: 'scroll',
     },
+    text: {
+        color: 'black',
+        width: '100%',
+    }
 });

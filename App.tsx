@@ -1,75 +1,50 @@
-import React, {useEffect, useState} from "react";
-import {StyleSheet, Text, SafeAreaView} from "react-native";
-import Menu from "./components/Menu";
-import TodoList from "./components/Todo-list";
-import ITodo from "./models/Itodo.model";
-import EditTodoView from "./views/EditTodo.view";
-import axios from "axios";
-//import CookieManager from '@react-native-cookies/cookies';
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {Platform} from "react-native";
+import Cookies from "js-cookie";
+import * as SecureStore from "expo-secure-store";
+import * as React from 'react';
+import {useEffect, useState} from 'react';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-    const [data, setData] = useState<ITodo[]>([]);
-    const [isEditTodoVisible, setIsEditTodoVisible] = useState(false);
+    const [isSignedIn, setIsSignedIn] = useState(false);
 
     useEffect(() => {
-        axios.post("https://e74a-2a02-2788-644-25d-fc65-f6c6-7aee-e851.ngrok-free.app/Auth/login", {
-            email: "test@test.com",
-            password: "Password"
-        }, {
-            headers: {
-                "Accept": "text/plain",
-                "Content-Type": "application/json",
-            },
-        }).then((res) => {
-            console.log(res.data);
-            //CookieManager.set('JWT', res.data.token);
-        }).catch((err) => {
-                console.log(err);
-            }
-        );
+        if (Platform.OS === 'web') {
+            setIsSignedIn(Cookies.get('JWT') !== undefined);
+        } else {
+            SecureStore.getItemAsync('JWT').then(res => {
+                setIsSignedIn(res !== undefined);
+            })
+        }
     }, []);
 
-    const onAddTodo = () => {
-        setIsEditTodoVisible(true);
-    };
-
-    const onCloseEditTodo = () => {
-        setIsEditTodoVisible(false);
-    };
-
-    const onSaveTodo = (d: ITodo) => {
-        console.log(d);
-        setData((data) => [...data, d]);
-        setIsEditTodoVisible(false);
-    };
-
     return (
-        <SafeAreaView style={styles.container}>
-            <Text style={styles.title}>ToDo</Text>
-            <TodoList data={data}/>
-            <Menu onAddTodo={onAddTodo}/>
-
-            <EditTodoView isVisible={isEditTodoVisible}
-                          onClose={onCloseEditTodo}
-                          onSave={onSaveTodo}
-            />
-        </SafeAreaView>
+        <NavigationContainer>
+            <Stack.Navigator>
+                {isSignedIn ? (
+                    <>
+                        <Stack.Screen name="Home" component={HomeScreen}/>
+                    </>
+                ) : (
+                    <>
+                        <Stack.Screen name="SignIn" component={SignInScreen}/>
+                    </>
+                )}
+            </Stack.Navigator>
+        </NavigationContainer>
     );
-}
 
-const styles = StyleSheet.create({
-    container: {
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "#fff",
-        height: "90%",
-        width: "100%",
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        padding: 20,
-        paddingBottom: 0,
-    },
-});
+    function HomeScreen() {
+        return <Home/>;
+    }
+
+    function SignInScreen() {
+        return <Login signed={setIsSignedIn}/>;
+    }
+}
