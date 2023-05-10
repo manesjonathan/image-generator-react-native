@@ -22,7 +22,7 @@ export default function App() {
             setIsSignedIn(Cookies.get('JWT') !== undefined);
         } else {
             SecureStore.getItemAsync('JWT').then(res => {
-                setIsSignedIn(res !== undefined);
+                setIsSignedIn(res !== null);
             })
         }
     }, []);

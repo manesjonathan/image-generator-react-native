@@ -17,3 +17,7 @@ web-build/
 .metro-health-check*
 /package-lock.json
 /yarn.lock
+/google-services.json
+/android/app/src/google-services.json
+/utils/config.ts
+/android/

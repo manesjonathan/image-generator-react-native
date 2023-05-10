@@ -1,22 +1,31 @@
 import React, {useState} from 'react';
-import {Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {login} from "../utils/api";
+import {Button, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {register} from "../utils/api";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
+import {ConfigureParams, GoogleSignin,} from '@react-native-google-signin/google-signin';
+import {WEB_CLIENT_ID} from "../utils/config";
 
+const config: ConfigureParams = {
+    webClientId: WEB_CLIENT_ID,
+    scopes: ['email', 'profile'],
+};
 export const Login = ({signed}: { signed: (value: boolean) => void }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        login(email, password).then(async res => {
+        register(email, password).then(async res => {
             console.log(res);
             if (Platform.OS === 'web') {
-                Cookies.set('JWT', res)
+                Cookies.set('JWT', JSON.stringify(res))
+                signed(true);
+
             } else {
-                await SecureStore.setItemAsync('JWT', res)
+                await SecureStore.setItemAsync('JWT', JSON.stringify(res));
+                signed(true);
+
             }
-            if (res) signed(true);
         });
     }
 
@@ -50,6 +59,22 @@ export const Login = ({signed}: { signed: (value: boolean) => void }) => {
             </TouchableOpacity>
             <TouchableOpacity>
                 <Text style={styles.loginText}>Signup</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+                <Button title={'Sign in with Google'} onPress={() => {
+                    GoogleSignin.configure(config);
+                    GoogleSignin.hasPlayServices().then((hasPlayService) => {
+                        if (hasPlayService) {
+                            GoogleSignin.signIn().then((userInfo) => {
+                                console.log(JSON.stringify(userInfo))
+                            }).catch((e) => {
+                                console.log("ERROR IS: " + JSON.stringify(e));
+                            })
+                        }
+                    }).catch((e) => {
+                        console.log("ERROR IS: " + JSON.stringify(e));
+                    })
+                }}/>
             </TouchableOpacity>
         </SafeAreaView>
     );

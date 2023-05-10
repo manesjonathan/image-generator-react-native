@@ -13,16 +13,17 @@ export const login = async (email: string, password: string): Promise<string> =>
         email: email,
         password: password
     }, header).then((res) => {
-        return res.data;
+        return res.data.token;
     }).catch((err) => {
             console.log(err);
         }
     );
 };
 
-export const register = (email: string, password: string) => {
+export const register = async (email: string, password: string) => {
     axios.post(URL + "/Auth/register", {
         email: email,
+        username: email,
         password: password
     }, header).then((res) => {
         return res.data.token;
