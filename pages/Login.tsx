@@ -1,19 +1,23 @@
 import React, {useState} from 'react';
 import {Button, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {register} from "../utils/api";
+import {register, signinWithGoogle} from "../utils/api";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
-import {ConfigureParams, GoogleSignin,} from '@react-native-google-signin/google-signin';
 import {WEB_CLIENT_ID} from "../utils/config";
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
 
-const config: ConfigureParams = {
-    webClientId: WEB_CLIENT_ID,
-    scopes: ['email', 'profile'],
-};
+WebBrowser.maybeCompleteAuthSession();
+
+
 export const Login = ({signed}: { signed: (value: boolean) => void }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        androidClientId: WEB_CLIENT_ID,
+        //iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    });
     const handleLogin = () => {
         register(email, password).then(async res => {
             console.log(res);
@@ -50,31 +54,26 @@ export const Login = ({signed}: { signed: (value: boolean) => void }) => {
 
                     onChangeText={text => setPassword(text)}/>
             </View>
-            <TouchableOpacity>
-                <Text style={styles.forgot}>Forgot Password?</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.loginBtn}>
                 <Text style={styles.loginText}
-                      onPress={handleLogin}>LOGIN</Text>
+                      onPress={handleLogin}>SIGN IN</Text>
             </TouchableOpacity>
+            <View style={styles.credentials}>
+                <Text style={styles.forgot} onPress={() => console.log('Pressed left')}>Already an account?</Text>
+                <Text style={styles.forgot} onPress={() => console.log('Pressed right')}>Forgot Password?</Text>
+            </View>
             <TouchableOpacity>
-                <Text style={styles.loginText}>Signup</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Button title={'Sign in with Google'} onPress={() => {
-                    GoogleSignin.configure(config);
-                    GoogleSignin.hasPlayServices().then((hasPlayService) => {
-                        if (hasPlayService) {
-                            GoogleSignin.signIn().then((userInfo) => {
-                                console.log(JSON.stringify(userInfo))
-                            }).catch((e) => {
-                                console.log("ERROR IS: " + JSON.stringify(e));
+                <Button
+                    title="Sign in with Google"
+                    disabled={!request}
+                    onPress={() => {
+                        promptAsync().then(res => {
+                            signinWithGoogle(res).then(res => {
+                                console.log('Cest bon');
                             })
-                        }
-                    }).catch((e) => {
-                        console.log("ERROR IS: " + JSON.stringify(e));
-                    })
-                }}/>
+                        })
+                    }}
+                />
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -104,7 +103,13 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         justifyContent: "center",
         padding: 20,
-
+    },
+    credentials: {
+        flexDirection: "row",
+        width: "80%",
+        alignItems: "center",
+        justifyContent: "space-between",
+        fontSize: 10,
     },
     inputText: {
         height: 50,
@@ -112,19 +117,23 @@ const styles = StyleSheet.create({
     },
     forgot: {
         color: "white",
-        fontSize: 11
     },
     loginBtn: {
         width: "80%",
-        backgroundColor: "#465881",
+        backgroundColor: "#f97316",
         borderRadius: 15,
         height: 50,
         alignItems: "center",
         justifyContent: "center",
-        marginTop: 40,
+        marginTop: 20,
         marginBottom: 10
     },
     loginText: {
-        color: "white"
+        color: "white",
+    },
+    googleButton: {
+        width: 192,
+        height: 48,
+        marginTop: 40,
     }
 });

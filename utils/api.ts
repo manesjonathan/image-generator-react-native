@@ -1,5 +1,6 @@
 import axios from "axios";
 import {URL} from "./config";
+import {AuthSessionResult} from "expo-auth-session";
 
 const header = {
     headers: {
@@ -32,3 +33,14 @@ export const register = async (email: string, password: string) => {
         }
     );
 };
+
+export const signinWithGoogle = async (idToken: AuthSessionResult) => {
+    axios.post(URL + "/Auth/google-signin", {
+        idToken: idToken
+    }, header).then((res) => {
+        return res.data.token;
+    }).catch((err) => {
+            console.log(err);
+        }
+    );
+}

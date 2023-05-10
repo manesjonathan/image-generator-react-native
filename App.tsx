@@ -2,7 +2,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Platform} from "react-native";
+import {Platform, StatusBar} from "react-native";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
 import * as React from 'react';
@@ -29,6 +29,7 @@ export default function App() {
 
     return (
         <NavigationContainer>
+            <StatusBar barStyle="light-content" backgroundColor={'#0e0e0e'}/>
             {
                 isSignedIn ? (
                     <Tab.Navigator>
