@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Button, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {register, signinWithGoogle} from "../utils/api";
+import {googleSignin, login} from "../utils/api";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
 import {WEB_CLIENT_ID} from "../utils/config";
@@ -16,10 +16,11 @@ export const Login = ({signed}: { signed: (value: boolean) => void }) => {
 
     const [request, response, promptAsync] = Google.useAuthRequest({
         androidClientId: WEB_CLIENT_ID,
+        webClientId: '1048915452140-oha1phr7cda2n1ifhe4rs38bcchloca8.apps.googleusercontent.com',
         //iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
     });
     const handleLogin = () => {
-        register(email, password).then(async res => {
+        login(email, password).then(async res => {
             console.log(res);
             if (Platform.OS === 'web') {
                 Cookies.set('JWT', JSON.stringify(res))
@@ -67,11 +68,16 @@ export const Login = ({signed}: { signed: (value: boolean) => void }) => {
                     title="Sign in with Google"
                     disabled={!request}
                     onPress={() => {
-                        promptAsync().then(res => {
-                            signinWithGoogle(res).then(res => {
-                                console.log('Cest bon');
-                            })
-                        })
+                        promptAsync().then((result) => {
+                            if (result.type === 'success') {
+                                console.log(result.authentication);
+                                googleSignin(result.authentication).then(async res => {
+                                    console.log(res);
+                                });
+                            } else {
+                                console.log('Authentication failed.');
+                            }
+                        });
                     }}
                 />
             </TouchableOpacity>
