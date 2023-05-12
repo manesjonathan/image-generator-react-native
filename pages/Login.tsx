@@ -1,11 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Platform, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {googleSignin, login} from "../utils/api";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
-import {WEB_CLIENT_ID} from "../utils/config";
+import {ANDROID_CLIENT_ID, WEB_CLIENT_ID} from "../utils/config";
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import axios from "axios";
+import {GoogleUser} from "../interfaces/GoogleAuth";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -13,24 +15,51 @@ WebBrowser.maybeCompleteAuthSession();
 export const Login = ({signed}: { signed: (value: boolean) => void }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [token, setToken] = useState<string>("");
+    const [userInfo, setUserInfo] = useState<GoogleUser>();
 
     const [request, response, promptAsync] = Google.useAuthRequest({
-        androidClientId: WEB_CLIENT_ID,
-        webClientId: '1048915452140-oha1phr7cda2n1ifhe4rs38bcchloca8.apps.googleusercontent.com',
+        androidClientId: ANDROID_CLIENT_ID,
+        webClientId: WEB_CLIENT_ID,
         //iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
     });
+
+    useEffect(() => {
+        if (response?.type === "success") {
+            setToken(response.authentication?.accessToken ?? "");
+            try {
+                axios.get<GoogleUser>('https://www.googleapis.com/userinfo/v2/me', {
+                    headers: {Authorization: `Bearer ${token}`},
+                }).then(res => {
+                    setUserInfo(res.data);
+                    googleSignin(userInfo).then(async res => {
+                        await console.log(res);
+                        if (Platform.OS === 'web') {
+                            Cookies.set('JWT', res.token);
+                        } else {
+                            await SecureStore.setItemAsync('JWT', JSON.stringify(res.token));
+                        }
+                        signed(true);
+                    });
+                });
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }, [response, token]);
+
+
     const handleLogin = () => {
         login(email, password).then(async res => {
             console.log(res);
             if (Platform.OS === 'web') {
-                Cookies.set('JWT', JSON.stringify(res))
-                signed(true);
-
-            } else {
-                await SecureStore.setItemAsync('JWT', JSON.stringify(res));
-                signed(true);
+                Cookies.set('JWT', res)
 
             }
+            await SecureStore.setItemAsync('JWT', res);
+            signed(res !== null);
+
         });
     }
 
@@ -68,16 +97,7 @@ export const Login = ({signed}: { signed: (value: boolean) => void }) => {
                     title="Sign in with Google"
                     disabled={!request}
                     onPress={() => {
-                        promptAsync().then((result) => {
-                            if (result.type === 'success') {
-                                console.log(result.authentication);
-                                googleSignin(result.authentication).then(async res => {
-                                    console.log(res);
-                                });
-                            } else {
-                                console.log('Authentication failed.');
-                            }
-                        });
+                        promptAsync()
                     }}
                 />
             </TouchableOpacity>

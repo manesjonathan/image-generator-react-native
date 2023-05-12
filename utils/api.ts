@@ -1,7 +1,6 @@
 import axios from "axios";
 import {URL} from "./config";
-import {AccessTokenRequest} from "../interfaces/GoogleAuth";
-import {TokenResponse} from "expo-auth-session";
+import {GoogleUser} from "../interfaces/GoogleAuth";
 
 const header = {
     headers: {
@@ -15,6 +14,7 @@ export const login = async (email: string, password: string): Promise<string> =>
         email: email,
         password: password
     }, header).then((res) => {
+        console.log(res);
         return res.data.token;
     }).catch((err) => {
             console.log(err);
@@ -35,8 +35,18 @@ export const register = async (email: string, password: string): Promise<string>
     );
 };
 
-export const googleSignin = async (accessToken: TokenResponse | null) => {
-    return axios.post<AccessTokenRequest>(URL + '/Auth/google-signin', {accessToken}, header).then((res) => {
+export const googleSignin = async (response: GoogleUser | undefined) => {
+    console.log(response);
+    return axios.post(URL + '/Auth/google-signin', response, header).then((res) => {
         return res.data;
+    });
+};
+
+export const getTodos = async () => {
+    return axios.get(URL + '/api/TodoItems', {}
+    ).then((res) => {
+        }
+    ).catch((err) => {
+        console.log(err);
     });
 };

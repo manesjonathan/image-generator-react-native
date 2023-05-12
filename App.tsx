@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-    const [isSignedIn, setIsSignedIn] = useState(false);
+    const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
 
     useEffect(() => {
         if (Platform.OS === 'web') {
@@ -23,7 +23,7 @@ export default function App() {
         } else {
             SecureStore.getItemAsync('JWT').then(res => {
                 setIsSignedIn(res !== null);
-            })
+            });
         }
     }, []);
 
