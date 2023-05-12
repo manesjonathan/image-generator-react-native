@@ -50,6 +50,6 @@ export default function App() {
     }
 
     function SignInScreen() {
-        return <Login signed={setIsSignedIn}/>;
+        return <Login setSigned={setIsSignedIn}/>;
     }
 }

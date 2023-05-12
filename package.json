@@ -8,6 +8,8 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "@expo/webpack-config": "^18.0.1",
     "@react-native-cookies/cookies": "^6.2.1",
     "@react-navigation/bottom-tabs": "^6.5.7",
@@ -26,9 +28,11 @@
     "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
     "expo-web-browser": "~12.1.1",
+    "framer-motion": "^10.12.10",
     "js-cookie": "^3.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-google-button": "^0.7.2",
     "react-native": "0.71.7",
     "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-gesture-handler": "~2.9.0",

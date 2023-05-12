@@ -1,6 +1,6 @@
 import axios from "axios";
 import {URL} from "./config";
-import {GoogleUser} from "../interfaces/GoogleAuth";
+import {GoogleUser} from "../interfaces/GoogleUser";
 
 const header = {
     headers: {
@@ -14,10 +14,9 @@ export const login = async (email: string, password: string): Promise<string> =>
         email: email,
         password: password
     }, header).then((res) => {
-        console.log(res);
         return res.data.token;
-    }).catch((err) => {
-            console.log(err);
+    }).catch(() => {
+            return null;
         }
     );
 };
@@ -42,11 +41,3 @@ export const googleSignin = async (response: GoogleUser | undefined) => {
     });
 };
 
-export const getTodos = async () => {
-    return axios.get(URL + '/api/TodoItems', {}
-    ).then((res) => {
-        }
-    ).catch((err) => {
-        console.log(err);
-    });
-};
