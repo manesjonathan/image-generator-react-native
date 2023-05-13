@@ -68,9 +68,10 @@ export const Login = ({setSigned}: { setSigned: (value: boolean) => void }) => {
 
                 if (Platform.OS === 'web') {
                     Cookies.set('JWT', res!)
+                } else {
+                    await SecureStore.setItemAsync('JWT', JSON.stringify(res));
                 }
 
-                await SecureStore.setItemAsync('JWT', JSON.stringify(res));
                 setSigned(true);
                 setEmailError(undefined);
                 setPasswordError(undefined);
