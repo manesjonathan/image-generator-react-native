@@ -46,8 +46,10 @@ export const googleSignin = async (response: Interfaces) => {
 export const logout = async () => {
     if (Platform.OS === 'web') {
         Cookies.remove('JWT');
+        Cookies.remove('user_id')
     } else {
         await SecureStore.deleteItemAsync('JWT');
+        await SecureStore.deleteItemAsync('user_id');
     }
 }
 
