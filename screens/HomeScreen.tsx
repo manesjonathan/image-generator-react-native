@@ -1,6 +1,6 @@
-import {FaHome} from "react-icons/fa";
-import {GrGallery} from "react-icons/gr";
-import {AiFillSetting} from "react-icons/ai";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import IconSettings from 'react-native-vector-icons/Feather';
+import IconGallery from 'react-native-vector-icons/Entypo';
 import React from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomeComponent from "./components/HomeScreen/Home";
@@ -20,17 +20,17 @@ const HomeScreen = () => {
         }}>
             <Tabs.Screen name="Home" component={HomeComponent} options={{
                 tabBarIcon: () => (
-                    <FaHome/>
-                ),
+                    <Icon name={'home'} size={20} />
+                )
             }}/>
             <Tabs.Screen name="Gallery" component={GalleryComponent as any} options={{
                 tabBarIcon: () => (
-                    <GrGallery/>
+                    <IconGallery name={'images'} size={20} />
                 )
             }}/>
             <Tabs.Screen name="Settings" component={ProfileComponent as any} options={{
                 tabBarIcon: () => (
-                    <AiFillSetting/>
+                    <IconSettings name={'settings'} size={20} />
                 )
             }}/>
         </Tabs.Navigator>

@@ -4,7 +4,7 @@ import {register} from '../../../utils/api';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../utils/types';
 import {styles} from "./styles";
-import GoogleSignin from "../GoogleSignin";
+import GoogleLogin from "../GoogleLogin";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
 
@@ -27,7 +27,7 @@ export const Register = ({navigation,}: NativeStackScreenProps<RootStackParamLis
             return;
         }
         if (password !== confirmPassword) {
-            setConfirmPasswordError('Passwords do not match');
+            setConfirmPasswordError('Passwords does not match');
             return;
         }
 
@@ -40,6 +40,7 @@ export const Register = ({navigation,}: NativeStackScreenProps<RootStackParamLis
             } else {
                 await SecureStore.setItemAsync('JWT', JSON.stringify(res));
             }
+            navigation.replace('App');
             setEmail("");
             setPassword("");
         });
@@ -49,8 +50,7 @@ export const Register = ({navigation,}: NativeStackScreenProps<RootStackParamLis
         <ImageBackground
             source={require('../../../assets/images/bg.webp')}
             style={styles.container}
-            resizeMode="cover"
-        >
+            resizeMode="cover">
             <SafeAreaView style={styles.safeArea}>
                 <Text style={styles.logo}>Image Generator</Text>
                 <View style={styles.inputView}>
@@ -93,7 +93,7 @@ export const Register = ({navigation,}: NativeStackScreenProps<RootStackParamLis
                     </Text>
                 </View>
                 <TouchableOpacity>
-                    <GoogleSignin navigation={navigation}/>
+                    <GoogleLogin navigation={navigation}/>
                 </TouchableOpacity>
             </SafeAreaView>
         </ImageBackground>

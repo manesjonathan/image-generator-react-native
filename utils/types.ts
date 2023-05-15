@@ -3,6 +3,5 @@ export type RootStackParamList = {
     Auth: undefined;
     Login: undefined;
     Register: undefined;
-    DrawerNavigationRoutes: undefined;
-    GoogleSignin: undefined;
+    App: undefined;
 };

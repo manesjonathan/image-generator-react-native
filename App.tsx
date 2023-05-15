@@ -23,7 +23,7 @@ const App = () => {
                     options={{headerShown: false}}
                 />
                 <Stack.Screen
-                    name="DrawerNavigationRoutes"
+                    name="App"
                     component={HomeScreen}
                     options={{headerShown: false}}
                 />

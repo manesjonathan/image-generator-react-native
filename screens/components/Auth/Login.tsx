@@ -6,7 +6,7 @@ import * as SecureStore from "expo-secure-store";
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from "../../../utils/types";
 import {styles} from "./styles";
-import GoogleSignin from "../GoogleSignin";
+import GoogleLogin from "../GoogleLogin";
 
 export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
     const [email, setEmail] = useState<string>("");
@@ -26,6 +26,7 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                 } else {
                     await SecureStore.setItemAsync('JWT', JSON.stringify(res));
                 }
+                navigation.replace('App');
                 setEmail('');
                 setPassword('');
             });
@@ -70,7 +71,7 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                     <Text style={styles.forgot} onPress={() => navigation.replace('Register')}> Create an account</Text>
                 </View>
                 <TouchableOpacity>
-                    <GoogleSignin navigation={navigation}/>
+                    <GoogleLogin navigation={navigation}/>
                 </TouchableOpacity>
             </SafeAreaView>
         </ImageBackground>

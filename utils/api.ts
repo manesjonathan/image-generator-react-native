@@ -3,7 +3,7 @@ import {URL} from "./config";
 import * as SecureStore from "expo-secure-store";
 import {Platform} from "react-native";
 import Cookies from "js-cookie";
-import {Interfaces} from "./interfaces";
+import {User} from "@react-native-google-signin/google-signin";
 
 const header = {
     headers: {
@@ -37,7 +37,7 @@ export const register = async (email: string, password: string): Promise<string>
     );
 };
 
-export const googleSignin = async (response: Interfaces) => {
+export const googleSignin = async (response: User) => {
     return axios.post(URL + '/Auth/google-signin', response, header).then((res) => {
         return res.data.token;
     });
