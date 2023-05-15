@@ -1,55 +1,59 @@
-import Login from "./pages/Login";
-import Home from "./pages/Home";
+import React from "react";
+import Login from "./screens/Login";
+import Home from "./screens/Home";
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Platform, StatusBar} from "react-native";
-import Cookies from "js-cookie";
-import * as SecureStore from "expo-secure-store";
-import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import 'react-native-gesture-handler';
-
+import SplashScreen from "./screens/SplashScreen";
+import Profile from "./screens/Profile";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tabs = createBottomTabNavigator();
 
-export default function App() {
-    const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
+const Auth = () => {
+    return (
+        <Stack.Navigator initialRouteName="LoginScreen">
+            <Stack.Screen
+                name="Login"
+                component={Login as any}
+                options={{headerShown: false}}
+            />
+        </Stack.Navigator>
+    );
+};
 
-    useEffect(() => {
-        if (Platform.OS === 'web') {
-            setIsSignedIn(Cookies.get('JWT') !== undefined);
-        } else {
-            SecureStore.getItemAsync('JWT').then(res => {
-                setIsSignedIn(res !== null);
-            });
-        }
-    }, []);
+const HomeScreen = () => {
+    return (
+        <Tabs.Navigator initialRouteName="HomeScreen">
+            <Tabs.Screen name="HomeScreen" component={Home}/>
+            <Tabs.Screen name="ProfileScreen" component={Profile as any}/>
+        </Tabs.Navigator>
+    );
+};
 
+const App = () => {
     return (
         <NavigationContainer>
-            <StatusBar barStyle="light-content" backgroundColor={'#0e0e0e'}/>
-            {
-                isSignedIn ? (
-                    <Tab.Navigator>
-                        <Tab.Screen name="Home" component={HomeScreen}/>
-                        <Tab.Screen name="Test" component={HomeScreen}/>
-                    </Tab.Navigator>
-                ) : (
-                    <Stack.Navigator>
-                        <Stack.Screen name="SignIn" component={SignInScreen} options={{headerShown: false}}/>
-                    </Stack.Navigator>
-                )
-            }
+            <Stack.Navigator initialRouteName="SplashScreen">
+                <Stack.Screen
+                    name="SplashScreen"
+                    component={SplashScreen as any}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="Auth"
+                    component={Auth}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="DrawerNavigationRoutes"
+                    component={HomeScreen}
+                    options={{headerShown: false}}
+                />
+            </Stack.Navigator>
         </NavigationContainer>
     );
+};
 
-    function HomeScreen() {
-        return <Home/>;
-    }
-
-    function SignInScreen() {
-        return <Login setSigned={setIsSignedIn}/>;
-    }
-}
+export default App;

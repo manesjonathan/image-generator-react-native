@@ -1,6 +1,9 @@
 import axios from "axios";
 import {URL} from "./config";
 import {GoogleUser} from "../interfaces/GoogleUser";
+import * as SecureStore from "expo-secure-store";
+import {Platform} from "react-native";
+import Cookies from "js-cookie";
 
 const header = {
     headers: {
@@ -34,10 +37,18 @@ export const register = async (email: string, password: string): Promise<string>
     );
 };
 
-export const googleSignin = async (response: GoogleUser | undefined) => {
-    console.log(response);
+export const googleSignin = async (response: GoogleUser) => {
     return axios.post(URL + '/Auth/google-signin', response, header).then((res) => {
-        return res.data;
+        return res.data.token;
     });
 };
+
+export const logout = async () => {
+    if (Platform.OS === 'web') {
+        Cookies.remove('JWT');
+    } else {
+        await SecureStore.deleteItemAsync('JWT');
+    }
+}
+
 

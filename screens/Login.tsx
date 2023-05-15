@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
     ImageBackground,
     Platform,
@@ -18,14 +18,15 @@ import * as Google from 'expo-auth-session/providers/google';
 import axios from "axios";
 import {GoogleUser} from "../interfaces/GoogleUser";
 import GoogleButton from 'react-google-button'
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from "../utils/types";
 
 WebBrowser.maybeCompleteAuthSession();
 
-export const Login = ({setSigned}: { setSigned: (value: boolean) => void }) => {
+
+export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const [token, setToken] = useState<string>();
-    const [userInfo, setUserInfo] = useState<GoogleUser>();
     const [emailError, setEmailError] = useState<string>();
     const [passwordError, setPasswordError] = useState<string>();
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -34,31 +35,25 @@ export const Login = ({setSigned}: { setSigned: (value: boolean) => void }) => {
         //iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
     });
 
-    useEffect(() => {
-        if (response?.type === "success") {
-            setToken(response.authentication?.accessToken ?? "");
-            try {
-                axios.get<GoogleUser>('https://www.googleapis.com/userinfo/v2/me', {
-                    headers: {Authorization: `Bearer ${token}`},
-                }).then(res => {
-                    setUserInfo(res.data);
-                    googleSignin(userInfo).then(async res => {
-                        if (Platform.OS === 'web') {
-                            Cookies.set('JWT', res.token);
-                        } else {
-                            await SecureStore.setItemAsync('JWT', JSON.stringify(res.token));
-                        }
-                        setSigned(true);
-                    });
-                });
-
-            } catch (error) {
-                return;
+    const handleGoogleSigning = (token: string) => {
+        axios.get<GoogleUser>('https://www.googleapis.com/userinfo/v2/me', {
+            headers: {Authorization: `Bearer ${token}`},
+        }).then(async res => {
+            if (Platform.OS === 'web') {
+                Cookies.set('user_id', res.data.id);
+            } else {
+                await SecureStore.setItemAsync('user_id', JSON.stringify(res.data.id));
             }
-        }
-    }, [response, token]);
-
-
+            googleSignin(res.data).then(async res => {
+                if (Platform.OS === 'web') {
+                    Cookies.set('JWT', res);
+                } else {
+                    await SecureStore.setItemAsync('JWT', JSON.stringify(res));
+                }
+                navigation.replace('DrawerNavigationRoutes');
+            });
+        });
+    }
     const handleLogin = () => {
         if (email && password) {
             login(email, password).then(async res => {
@@ -71,8 +66,6 @@ export const Login = ({setSigned}: { setSigned: (value: boolean) => void }) => {
                 } else {
                     await SecureStore.setItemAsync('JWT', JSON.stringify(res));
                 }
-
-                setSigned(true);
                 setEmailError(undefined);
                 setPasswordError(undefined);
             });
@@ -114,20 +107,23 @@ export const Login = ({setSigned}: { setSigned: (value: boolean) => void }) => {
                     </Text>
                 </TouchableOpacity>
                 <View style={styles.credentials}>
-                    <Text style={styles.forgot} onPress={() => console.log('Pressed left')}>Already an account?</Text>
+                    <Text style={styles.forgot} onPress={() => console.log('Pressed left')}>Already an
+                        account?</Text>
                     <Text style={styles.forgot} onPress={() => console.log('Pressed right')}>Forgot Password?</Text>
                 </View>
                 <TouchableOpacity>
-                    <TouchableOpacity style={styles.googleButton}>
-                        <GoogleButton
-                            title="Sign in with Google"
-                            type={'light'}
-                            disabled={!request}
-                            onClick={async () => {
-                                await promptAsync()
-                            }}
-                        />
-                    </TouchableOpacity>
+                    <GoogleButton style={styles.googleButton}
+                                  title="Sign in with Google"
+                                  type={'light'}
+                                  disabled={!request}
+                                  onClick={async () => {
+                                      await promptAsync().then(res => {
+                                          if (res.type === 'success') {
+                                              handleGoogleSigning(res.params.access_token);
+                                          }
+                                      });
+                                  }}
+                    />
                 </TouchableOpacity>
             </SafeAreaView>
         </ImageBackground>
@@ -192,8 +188,7 @@ const styles = StyleSheet.create({
         color: "white",
     },
     googleButton: {
-        width: 192,
-        height: 48,
+
         marginTop: 40,
     }
 });
