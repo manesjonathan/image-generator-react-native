@@ -1,9 +1,9 @@
 import axios from "axios";
 import {URL} from "./config";
-import {GoogleUser} from "../interfaces/GoogleUser";
 import * as SecureStore from "expo-secure-store";
 import {Platform} from "react-native";
 import Cookies from "js-cookie";
+import {Interfaces} from "./interfaces";
 
 const header = {
     headers: {
@@ -37,7 +37,7 @@ export const register = async (email: string, password: string): Promise<string>
     );
 };
 
-export const googleSignin = async (response: GoogleUser) => {
+export const googleSignin = async (response: Interfaces) => {
     return axios.post(URL + '/Auth/google-signin', response, header).then((res) => {
         return res.data.token;
     });

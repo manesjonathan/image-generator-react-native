@@ -10,15 +10,11 @@ import Cookies from "js-cookie";
 import {SplashScreenProps} from "../utils/types";
 
 const SplashScreen: React.FC<SplashScreenProps> = ({navigation}) => {
-    //State for ActivityIndicator animation
     const [animating, setAnimating] = useState(true);
 
     useEffect(() => {
         setTimeout(() => {
             setAnimating(false);
-            // Check if user_id is set or not
-            // If not then send for Authentication
-            // else send to Home Screen
             const checkAuthentication = async () => {
                 if (Platform.OS === 'web') {
                     const value = await Cookies.get('user_id');

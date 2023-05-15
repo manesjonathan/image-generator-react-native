@@ -9,17 +9,17 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import {googleSignin, login} from "../utils/api";
+import {googleSignin, login} from "../../../utils/api";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
-import {ANDROID_CLIENT_ID, WEB_CLIENT_ID} from "../utils/config";
+import {ANDROID_CLIENT_ID, WEB_CLIENT_ID} from "../../../utils/config";
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
 import axios from "axios";
-import {GoogleUser} from "../interfaces/GoogleUser";
 import GoogleButton from 'react-google-button'
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from "../utils/types";
+import {RootStackParamList} from "../../../utils/types";
+import {Interfaces} from "../../../utils/interfaces";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -36,7 +36,7 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
     });
 
     const handleGoogleSigning = (token: string) => {
-        axios.get<GoogleUser>('https://www.googleapis.com/userinfo/v2/me', {
+        axios.get<Interfaces>('https://www.googleapis.com/userinfo/v2/me', {
             headers: {Authorization: `Bearer ${token}`},
         }).then(async res => {
             if (Platform.OS === 'web') {
@@ -73,7 +73,7 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
     }
 
     return (
-        <ImageBackground source={require('../assets/images/bg.webp')} style={styles.container} resizeMode="cover">
+        <ImageBackground source={require('../../../assets/images/bg.webp')} style={styles.container} resizeMode="cover">
             <SafeAreaView style={styles.safeArea}>
                 <Text style={styles.logo}>Image Generator</Text>
                 <View style={styles.inputView}>

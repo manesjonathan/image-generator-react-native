@@ -1,13 +1,12 @@
-import {Button, Text, View} from "react-native";
+import {Button, View} from "react-native";
 import React from "react";
-import {logout} from "../utils/api";
+import {logout} from "../../../utils/api";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {RootStackParamList} from "../utils/types";
+import {RootStackParamList} from "../../../utils/types";
 
-const Profile = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
+const Settings = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
     return (
         <View>
-            <Text>Profile</Text>
             <Button title={"Logout"} onPress={() => {
                 logout().then(() => {
                         navigation.replace('Auth');
@@ -18,4 +17,4 @@ const Profile = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login
     )
 }
 
-export default Profile;
+export default Settings;
