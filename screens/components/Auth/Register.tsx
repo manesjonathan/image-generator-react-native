@@ -8,7 +8,7 @@ import GoogleLogin from "../GoogleLogin";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
 
-export const Register = ({navigation,}: NativeStackScreenProps<RootStackParamList, 'Register'>) => {
+export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Register'>) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmPassword, setConfirmPassword] = useState<string>('');

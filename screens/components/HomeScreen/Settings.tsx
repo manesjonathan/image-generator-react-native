@@ -1,6 +1,6 @@
 import {Button, View} from "react-native";
 import React from "react";
-import {logout} from "../../../utils/api";
+import {googleSignOut} from "../../../utils/api";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../../utils/types";
 
@@ -8,7 +8,7 @@ const Settings = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Logi
     return (
         <View>
             <Button title={"Logout"} onPress={() => {
-                logout().then(() => {
+                googleSignOut().then(() => {
                         navigation.replace('Auth');
                     }
                 );

@@ -1,13 +1,11 @@
-export interface SignInData {
-    idToken: string;
-    scopes: string[];
-    serverAuthCode: null;
-    user: {
-        email: string;
-        familyName: string;
-        givenName: string;
-        id: string;
-        name: string;
-        photo: string;
-    };
+export interface GoogleResponse {
+    id: string;
+    email: string;
+    verified_email: boolean;
+    name: string;
+    given_name: string;
+    family_name: string;
+    picture: string;
+    locale: string;
 }
+
