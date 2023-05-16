@@ -37,7 +37,6 @@ export const register = async (email: string, password: string): Promise<string>
 };
 
 export const googleSignIn = async (response: GoogleResponse): Promise<string> => {
-    console.log(response);
     return axios.post(URL + '/Auth/google-signin', response, header).then((res) => {
         return res.data.token;
     });
