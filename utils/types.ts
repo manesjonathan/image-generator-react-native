@@ -5,4 +5,5 @@ export type RootStackParamList = {
     Register: undefined;
     App: undefined;
     GoogleLogin: undefined;
+    Refill: undefined;
 };
