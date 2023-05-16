@@ -46,7 +46,6 @@ export const googleSignOut = async () => {
     try {
         if (Platform.OS === 'web') {
             Cookies.remove('JWT');
-            Cookies.remove('user_id')
         } else {
             await SecureStore.deleteItemAsync('JWT');
         }
