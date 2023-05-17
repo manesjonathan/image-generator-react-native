@@ -2,10 +2,10 @@ import React, {useEffect} from "react";
 import {Button, Platform, View} from "react-native";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
-import {googleSignIn} from "../../utils/api";
+import {googleSignIn} from "../../../utils/api";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import {ANDROID_CLIENT_ID, WEB_CLIENT_ID} from "../../utils/config";
+import {ANDROID_CLIENT_ID, WEB_CLIENT_ID} from "../../../utils/config";
 import axios from "axios";
 
 WebBrowser.maybeCompleteAuthSession();

@@ -3,11 +3,7 @@ import {Platform, StyleSheet} from "react-native";
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#0e0e0e',
-        minHeight: Platform.OS === 'web' ? '100vh' : '100%'
-    },
-    safeArea: {
-        flex: 1,
+        minHeight: Platform.OS === 'web' ? '100vh' : '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -19,7 +15,6 @@ export const styles = StyleSheet.create({
         textAlign: "center"
     },
     inputView: {
-        width: "80%",
         backgroundColor: "rgba(70,88,129,0.85)",
         borderRadius: 15,
         height: 50,
@@ -35,13 +30,12 @@ export const styles = StyleSheet.create({
     },
     inputText: {
         height: 50,
-        color: "white"
+        color: "white",
     },
     forgot: {
         color: "white",
     },
     loginBtn: {
-        width: "80%",
         backgroundColor: "#f97316",
         borderRadius: 15,
         height: 50,
@@ -54,7 +48,6 @@ export const styles = StyleSheet.create({
         color: "white",
     },
     googleButton: {
-
         marginTop: 40,
     }
 });

@@ -1,38 +1,39 @@
 import React, {useState} from 'react';
-import {ImageBackground, Platform, SafeAreaView, Text, TextInput, TouchableOpacity, View,} from 'react-native';
+import {Button, ImageBackground, Platform, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 import {register} from '../../../utils/api';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../utils/types';
 import {styles} from "./styles";
-import GoogleLogin from "../GoogleLogin";
+import GoogleLogin from "./GoogleLogin";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
+import {Formik, FormikValues} from "formik";
+import Toast from "react-native-root-toast";
 
 export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Register'>) => {
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
     const [emailError, setEmailError] = useState<string | null>(null);
     const [passwordError, setPasswordError] = useState<string | null>(null);
-    const [confirmPasswordError, setConfirmPasswordError] =
-        useState<string | null>(null);
+    const [confirmPasswordError, setConfirmPasswordError] = useState<string | null>(null);
 
-    const handleRegister = () => {
-        if (!email) {
+    const handleRegister = (values: FormikValues) => {
+        if (values.email === '') {
             setEmailError('Please enter your email');
             return;
         }
-        if (!password) {
+        if (values.password === '') {
             setPasswordError('Please enter your password');
             return;
         }
-        if (password !== confirmPassword) {
+        if (values.password !== values.confirmPassword) {
             setConfirmPasswordError('Passwords does not match');
             return;
         }
 
-        register(email, password).then(async res => {
+        register(values.email, values.password).then(async res => {
             if (res === null) {
+                Toast.show('There is a problem with your registration', {
+                    duration: Toast.durations.LONG,
+                });
                 return;
             }
             if (Platform.OS === 'web') {
@@ -41,8 +42,6 @@ export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList
                 await SecureStore.setItemAsync('JWT', JSON.stringify(res));
             }
             navigation.replace('App');
-            setEmail("");
-            setPassword("");
         });
     };
 
@@ -51,51 +50,60 @@ export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList
             source={require('../../../assets/images/bg.webp')}
             style={styles.container}
             resizeMode="cover">
-            <SafeAreaView style={styles.safeArea}>
-                <Text style={styles.logo}>Image Generator</Text>
-                <View style={styles.inputView}>
-                    <TextInput
-                        style={styles.inputText}
-                        autoCapitalize="none"
-                        placeholder={emailError ? emailError : 'Email...'}
-                        placeholderTextColor={styles.inputText.color}
-                        onChangeText={(text) => setEmail(text)}
-                    />
+            <Formik
+                initialValues={{email: '', password: '', confirmPassword: ''}}
+                onSubmit={values => handleRegister(values)}>{({handleChange, handleBlur, handleSubmit, values}) => (
+                <View>
+                    <Text style={styles.logo}>Image Generator</Text>
+                    <View style={styles.inputView}>
+                        <TextInput
+                            style={styles.inputText}
+                            autoCapitalize="none"
+                            placeholder={emailError ? emailError : 'Email...'}
+                            placeholderTextColor={styles.inputText.color}
+                            onBlur={handleBlur('email')}
+                            value={values.email}
+                            onChangeText={handleChange('email')}
+                        />
+                    </View>
+                    <View style={styles.inputView}>
+                        <TextInput
+                            secureTextEntry
+                            style={styles.inputText}
+                            autoCapitalize="none"
+                            placeholder={passwordError ? passwordError : 'Password...'}
+                            placeholderTextColor={styles.inputText.color}
+                            onBlur={handleBlur('password')}
+                            value={values.password}
+                            onChangeText={handleChange('password')}
+                        />
+                    </View>
+                    <View style={styles.inputView}>
+                        <TextInput
+                            secureTextEntry
+                            style={styles.inputText}
+                            autoCapitalize="none"
+                            placeholder={confirmPasswordError ? confirmPasswordError : 'Confirm Password...'}
+                            placeholderTextColor={styles.inputText.color}
+                            onBlur={handleBlur('confirmPassword')}
+                            value={values.confirmPassword}
+                            onChangeText={handleChange('confirmPassword')}
+                        />
+                    </View>
+                    <Button color={"#f97316"} onPress={() => {
+                        handleSubmit();
+                    }} title="REGISTER"/>
+                    <View style={styles.credentials}>
+                        <Text style={styles.forgot} onPress={() => navigation.replace('Login')}>
+                            Already have an account?
+                        </Text>
+                    </View>
+                    <TouchableOpacity>
+                        <GoogleLogin navigation={navigation}/>
+                    </TouchableOpacity>
                 </View>
-                <View style={styles.inputView}>
-                    <TextInput
-                        secureTextEntry
-                        style={styles.inputText}
-                        autoCapitalize="none"
-                        placeholder={passwordError ? passwordError : 'Password...'}
-                        placeholderTextColor={styles.inputText.color}
-                        onChangeText={(text) => setPassword(text)}
-                    />
-                </View>
-                <View style={styles.inputView}>
-                    <TextInput
-                        secureTextEntry
-                        style={styles.inputText}
-                        autoCapitalize="none"
-                        placeholder={
-                            confirmPasswordError ? confirmPasswordError : 'Confirm Password...'
-                        }
-                        placeholderTextColor={styles.inputText.color}
-                        onChangeText={(text) => setConfirmPassword(text)}
-                    />
-                </View>
-                <TouchableOpacity style={styles.loginBtn} onPress={handleRegister}>
-                    <Text style={styles.loginText}>REGISTER</Text>
-                </TouchableOpacity>
-                <View style={styles.credentials}>
-                    <Text style={styles.forgot} onPress={() => navigation.replace('Login')}>
-                        Already have an account?
-                    </Text>
-                </View>
-                <TouchableOpacity>
-                    <GoogleLogin navigation={navigation}/>
-                </TouchableOpacity>
-            </SafeAreaView>
+            )}
+            </Formik>
         </ImageBackground>
     );
 };
