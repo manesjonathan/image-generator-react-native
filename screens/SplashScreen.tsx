@@ -1,15 +1,12 @@
-// Example of Splash, Login and Sign Up in React Native
-// https://aboutreact.com/react-native-login-and-signup/
-
-// Import React and Component
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, ImageBackground, Platform, StyleSheet} from 'react-native';
 
 import * as SecureStore from "expo-secure-store";
 import Cookies from "js-cookie";
-import {SplashScreenProps} from "../utils/types";
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from "../utils/types";
 
-const SplashScreen: React.FC<SplashScreenProps> = ({navigation}) => {
+const SplashScreen = ({navigation}: NativeStackScreenProps<RootStackParamList, 'SplashScreen'>) => {
     const [animating, setAnimating] = useState(true);
 
     useEffect(() => {
@@ -17,11 +14,11 @@ const SplashScreen: React.FC<SplashScreenProps> = ({navigation}) => {
             setAnimating(false);
             const checkAuthentication = async () => {
                 if (Platform.OS === 'web') {
-                    const value = await Cookies.get('user_id');
-                    navigation.replace(value === undefined ? 'Auth' : 'DrawerNavigationRoutes');
+                    const value = await Cookies.get('JWT');
+                    navigation.replace(value === undefined ? 'Auth' : 'App');
                 } else {
-                    const value = await SecureStore.getItemAsync('user_id');
-                    navigation.replace(value === null ? 'Auth' : 'DrawerNavigationRoutes');
+                    const value = await SecureStore.getItemAsync('JWT');
+                    navigation.replace(value === null ? 'Auth' : 'App');
                 }
             };
             checkAuthentication();

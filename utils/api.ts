@@ -15,7 +15,8 @@ export const login = async (email: string, password: string): Promise<string> =>
     return axios.post(URL + "/Auth/login", {
         email: email,
         password: password
-    }, header).then((res) => {
+    }, header)
+        .then((res) => {
         return res.data.token;
     }).catch(() => {
             return null;
@@ -28,7 +29,8 @@ export const register = async (email: string, password: string): Promise<string>
         email: email,
         username: email,
         password: password
-    }, header).then((res) => {
+    }, header)
+        .then((res) => {
         return res.data.token;
     }).catch((err) => {
             console.log(err);
@@ -37,7 +39,8 @@ export const register = async (email: string, password: string): Promise<string>
 };
 
 export const googleSignIn = async (response: GoogleResponse): Promise<string> => {
-    return axios.post(URL + '/Auth/google-signin', response, header).then((res) => {
+    return axios.post(URL + '/Auth/google-signin', response, header)
+        .then((res) => {
         return res.data.token;
     });
 };

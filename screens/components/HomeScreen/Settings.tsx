@@ -3,7 +3,6 @@ import React from "react";
 import {googleSignOut} from "../../../utils/api";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../../utils/types";
-import Refill from "../../Refill";
 
 const Settings = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
     return (
@@ -14,7 +13,6 @@ const Settings = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Logi
                     }
                 );
             }}/>
-            <Refill/>
         </View>
     )
 }
