@@ -7,6 +7,7 @@ import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 import {ANDROID_CLIENT_ID, WEB_CLIENT_ID} from "../../../utils/config";
 import axios from "axios";
+import {styles} from "./styles";
 
 WebBrowser.maybeCompleteAuthSession();
 type GoogleSigningProps = {
@@ -60,12 +61,12 @@ const GoogleLogin = ({navigation}: GoogleSigningProps) => {
     };
 
     return (
-        <View style={{marginTop: 40}}>
+        <View style={styles.googleButton}>
+
             <Button
                 title="Sign in with Google"
                 disabled={!request}
-                onPress={handlePress}
-            />
+                onPress={handlePress}/>
         </View>
     )
 }

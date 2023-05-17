@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 50,
         color: "#ffffff",
-        marginBottom: 40,
+        marginBottom: 30,
         textAlign: "center"
     },
     inputView: {
@@ -24,8 +24,8 @@ export const styles = StyleSheet.create({
     },
     credentials: {
         flexDirection: "row",
-        width: "80%",
         alignItems: "flex-end",
+        justifyContent: "flex-end",
         fontSize: 10,
     },
     inputText: {
@@ -33,7 +33,8 @@ export const styles = StyleSheet.create({
         color: "white",
     },
     forgot: {
-        color: "white",
+        marginTop: 10,
+        color: "black",
     },
     loginBtn: {
         backgroundColor: "#f97316",
@@ -48,6 +49,6 @@ export const styles = StyleSheet.create({
         color: "white",
     },
     googleButton: {
-        marginTop: 40,
+        marginTop: 30,
     }
 });
