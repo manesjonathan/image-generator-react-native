@@ -1,5 +1,5 @@
 import {Alert, Button, View} from "react-native";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {googleSignOut} from "../../../utils/api";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
 import {RootStackParamList} from "../../../utils/types";
@@ -8,6 +8,7 @@ import {URL} from "../../../utils/config";
 
 const Settings = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
     const {initPaymentSheet, presentPaymentSheet} = useStripe();
+    const [loading, setLoading] = useState(false);
 
     const fetchPaymentSheetParams = async () => {
         console.log("Fetching payment sheet params");
