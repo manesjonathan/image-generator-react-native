@@ -5,7 +5,7 @@ import * as SecureStore from "expo-secure-store";
 import {googleSignIn} from "../../../utils/api";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import {ANDROID_CLIENT_ID, WEB_CLIENT_ID} from "../../../utils/config";
+import {ANDROID_CLIENT_ID, IOS_CLIENT_ID, WEB_CLIENT_ID} from "../../../utils/config";
 import axios from "axios";
 import {styles} from "./styles";
 
@@ -18,8 +18,7 @@ const GoogleLogin = ({navigation}: GoogleSigningProps) => {
     const [request, response, promptAsync] = Google.useAuthRequest({
         androidClientId: ANDROID_CLIENT_ID,
         webClientId: WEB_CLIENT_ID,
-        iosClientId: "GOOGLE_GUID.apps.googleusercontent.com",
-
+        iosClientId: IOS_CLIENT_ID,
     });
 
     useEffect(() => {
@@ -62,7 +61,6 @@ const GoogleLogin = ({navigation}: GoogleSigningProps) => {
 
     return (
         <View style={styles.googleButton}>
-
             <Button
                 title="Sign in with Google"
                 disabled={!request}

@@ -16,6 +16,7 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.manesjonathan.imagegenerator",
       "supportsTablet": true
     },
     "android": {
