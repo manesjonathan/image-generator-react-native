@@ -30,7 +30,6 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                 return;
             }
             await setCookies(res, values.email, navigation);
-
         });
     }
 
@@ -83,7 +82,6 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                 </Formik>
             </ImageBackground>
         </RootSiblingParent>
-
     );
 }
 
