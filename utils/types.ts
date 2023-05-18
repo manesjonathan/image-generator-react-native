@@ -6,4 +6,5 @@ export type RootStackParamList = {
     App: undefined;
     GoogleLogin: undefined;
     Refill: undefined;
+    Settings: undefined;
 };

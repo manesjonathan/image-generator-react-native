@@ -35,7 +35,6 @@ const GoogleLogin = ({navigation}: GoogleSigningProps) => {
                 }
             ).then((res) => {
                 let email = res.data.email;
-                console.log("email: " + email);
                 googleSignIn(res.data).then(async res => {
                     await setCookies(res, email, navigation);
                 });

@@ -5,7 +5,7 @@ import React from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomeComponent from "./components/HomeScreen/Home";
 import GalleryComponent from "./components/HomeScreen/Gallery";
-import ProfileComponent from "./components/HomeScreen/Settings";
+import SettingsComponent from "./components/HomeScreen/Settings";
 import {STRIPE_PK_TEST} from "../utils/config";
 import {StripeProvider} from "@stripe/stripe-react-native";
 
@@ -30,12 +30,12 @@ const HomeScreen = () => {
                         <Icon name={'home'} size={20}/>
                     )
                 }}/>
-                <Tabs.Screen name="Gallery" component={GalleryComponent as any} options={{
+                <Tabs.Screen name="Gallery" component={GalleryComponent} options={{
                     tabBarIcon: () => (
                         <IconGallery name={'images'} size={20}/>
                     )
                 }}/>
-                <Tabs.Screen name="Settings" component={ProfileComponent as any} options={{
+                <Tabs.Screen name="Settings" component={SettingsComponent as any} options={{
                     tabBarIcon: () => (
                         <IconSettings name={'settings'} size={20}/>
                     )
