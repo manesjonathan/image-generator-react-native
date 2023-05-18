@@ -1,12 +1,10 @@
 import React, {useState} from 'react';
-import {Button, ImageBackground, Platform, Text, TextInput, TouchableOpacity, View,} from 'react-native';
-import {register} from '../../../utils/api';
+import {Button, ImageBackground, Text, TextInput, TouchableOpacity, View,} from 'react-native';
+import {register, setCookies} from '../../../utils/api';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../utils/types';
 import {styles} from "./styles";
 import GoogleLogin from "./GoogleLogin";
-import Cookies from "js-cookie";
-import * as SecureStore from "expo-secure-store";
 import {Formik, FormikValues} from "formik";
 import Toast from "react-native-root-toast";
 
@@ -36,12 +34,8 @@ export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList
                 });
                 return;
             }
-            if (Platform.OS === 'web') {
-                Cookies.set('JWT', res!)
-            } else {
-                await SecureStore.setItemAsync('JWT', JSON.stringify(res));
-            }
-            navigation.replace('App');
+            await setCookies(res, values.email, navigation);
+
         });
     };
 

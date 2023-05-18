@@ -6,38 +6,64 @@ import Auth from "./screens/Auth";
 import HomeScreen from "./screens/HomeScreen";
 import {Platform} from "react-native";
 import SplashScreen from "./screens/SplashScreen";
-import {StripeProvider} from "@stripe/stripe-react-native";
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+    /* const {handleURLCallback} = useStripe();
+     const handleDeepLink = useCallback(
+         async (url: string | null) => {
+             if (url) {
+                 const stripeHandled = await handleURLCallback(url);
+                 if (stripeHandled) {
+                     // This was a Stripe URL - you can return or add extra handling here as you see fit
+                 } else {
+                     // This was NOT a Stripe URL – handle as you normally would
+                 }
+             }
+         },
+         [handleURLCallback]
+     );
+
+     useEffect(() => {
+         const getUrlAsync = async () => {
+             const initialUrl = await Linking.getInitialURL();
+             handleDeepLink(initialUrl);
+         };
+
+         getUrlAsync();
+
+         const deepLinkListener = Linking.addEventListener(
+             'url',
+             (event: { url: string }) => {
+                 handleDeepLink(event.url);
+             }
+         );
+
+         return () => deepLinkListener.remove();
+     }, [handleDeepLink]);*/
+
     return (
-        <StripeProvider
-            publishableKey="pk_test_51IjwEfC1js4lodAyBRNVJ83bNJtsel67h00mea3VzENDLODQNxDERGAa9hQ9h4yptXh7ZXAnju179KJLgy2HekGd0096Mtmzjr"
-            urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
-            merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}" // required for Apple Pay
-        >
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName="SplashScreen">
-                    {(Platform.OS !== 'web') &&
-                        <Stack.Screen
-                            name="SplashScreen"
-                            component={SplashScreen as any}
-                            options={{headerShown: false}}/>
-                    }
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="SplashScreen">
+                {(Platform.OS !== 'web') &&
                     <Stack.Screen
-                        name="Auth"
-                        component={Auth}
-                        options={{headerShown: false}}
-                    />
-                    <Stack.Screen
-                        name="App"
-                        component={HomeScreen}
-                        options={{headerShown: false}}
-                    />
-                </Stack.Navigator>
-            </NavigationContainer>
-        </StripeProvider>
+                        name="SplashScreen"
+                        component={SplashScreen as any}
+                        options={{headerShown: false}}/>
+                }
+                <Stack.Screen
+                    name="Auth"
+                    component={Auth}
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="App"
+                    component={HomeScreen}
+                    options={{headerShown: false}}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 };
 

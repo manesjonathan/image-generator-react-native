@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import {Button, ImageBackground, Platform, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {login} from "../../../utils/api";
-import Cookies from "js-cookie";
-import * as SecureStore from "expo-secure-store";
+import {Button, ImageBackground, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {login, setCookies} from "../../../utils/api";
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from "../../../utils/types";
 import {styles} from "./styles";
@@ -31,18 +29,15 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                 });
                 return;
             }
-            if (Platform.OS === 'web') {
-                Cookies.set('JWT', res!)
-            } else {
-                await SecureStore.setItemAsync('JWT', JSON.stringify(res));
-            }
-            navigation.replace('App');
+            await setCookies(res, values.email, navigation);
+
         });
     }
 
     return (
-        <RootSiblingParent >
-            <ImageBackground source={require('../../../assets/images/bg.webp')} style={styles.container} resizeMode="cover">
+        <RootSiblingParent>
+            <ImageBackground source={require('../../../assets/images/bg.webp')} style={styles.container}
+                             resizeMode="cover">
                 <Formik
                     initialValues={{email: '', password: ''}}
                     onSubmit={values => handleLogin(values)}>

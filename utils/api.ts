@@ -17,11 +17,11 @@ export const login = async (email: string, password: string): Promise<string> =>
         password: password
     }, header)
         .then((res) => {
-        return res.data.token;
-    }).catch(() => {
-            return null;
-        }
-    );
+            return res.data.token;
+        }).catch(() => {
+                return null;
+            }
+        );
 };
 
 export const register = async (email: string, password: string): Promise<string> => {
@@ -31,18 +31,18 @@ export const register = async (email: string, password: string): Promise<string>
         password: password
     }, header)
         .then((res) => {
-        return res.data.token;
-    }).catch((err) => {
-            console.log(err);
-        }
-    );
+            return res.data.token;
+        }).catch((err) => {
+                console.log(err);
+            }
+        );
 };
 
 export const googleSignIn = async (response: GoogleResponse): Promise<string> => {
     return axios.post(URL + '/Auth/google-signin', response, header)
         .then((res) => {
-        return res.data.token;
-    });
+            return res.data.token;
+        });
 };
 
 export const googleSignOut = async () => {
@@ -57,4 +57,14 @@ export const googleSignOut = async () => {
     }
 };
 
+export const setCookies = async (token: string, email: string, navigation: any) => {
+    if (Platform.OS === 'web') {
+        Cookies.set('JWT', token);
+        Cookies.set('userEmail', email);
+    } else {
+        await SecureStore.setItemAsync('JWT', JSON.stringify(token));
+        await SecureStore.setItemAsync('userEmail', email);
+    }
+    await navigation.replace('App');
+}
 
