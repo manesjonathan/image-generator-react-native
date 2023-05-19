@@ -5,7 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-const Auth = () => {
+const AuthScreen = () => {
     return (
         <Stack.Navigator initialRouteName="LoginScreen">
             <Stack.Screen
@@ -22,4 +22,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default AuthScreen;

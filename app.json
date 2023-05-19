@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "image-generator",
-    "slug": "Image Generator",
+    "name": "Image Generator",
+    "slug": "image-generator",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

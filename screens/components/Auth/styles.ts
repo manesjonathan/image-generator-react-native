@@ -50,5 +50,11 @@ export const styles = StyleSheet.create({
     },
     googleButton: {
         marginTop: 30,
+    },
+    error: {
+        color: 'red',
+        marginTop: -25,
+        marginBottom: 10,
+        padding: 10,
     }
 });
