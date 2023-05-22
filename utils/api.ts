@@ -7,7 +7,6 @@ import {GoogleResponse} from "./interfaces";
 
 
 export const login = async (email: string, password: string): Promise<string> => {
-    console.log("Logging in");
     return axios.post(URL + "/Auth/login", {
         email: email,
         password: password
