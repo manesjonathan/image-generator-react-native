@@ -58,3 +58,19 @@ export const styles = StyleSheet.create({
         padding: 10,
     }
 });
+
+export const gridStyles = StyleSheet.create({
+    gallery: {
+        justifyContent: 'space-between',
+    },
+    item: {
+        flex: 1,
+        margin: 2,
+        height: 200, // Adjust the height of each grid item as needed
+    },
+    image: {
+        flex: 1,
+        width: '100%',
+        resizeMode: 'cover',
+    },
+});

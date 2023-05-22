@@ -1,13 +1,14 @@
 import React from 'react';
 import {Button, ImageBackground, Text, TextInput, TouchableOpacity, View,} from 'react-native';
-import {register, setCookies} from '../../../utils/api';
+import {register} from '../../../utils/api';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../../utils/types';
-import {styles} from "./styles";
+import {styles} from "../../../utils/styles";
 import GoogleLogin from "./GoogleLogin";
 import {Formik, FormikValues} from "formik";
 import Toast from "react-native-root-toast";
 import {SignupSchema} from "../../../utils/FormValidationSchema";
+import {SET_COOKIES} from "../../../utils/apiService";
 
 export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Register'>) => {
     const handleRegister = (values: FormikValues) => {
@@ -18,7 +19,7 @@ export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList
                 });
                 return;
             }
-            await setCookies(res, values.email, navigation);
+            await SET_COOKIES(res, values.email, navigation);
         });
     };
 
