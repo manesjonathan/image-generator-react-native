@@ -1,21 +1,15 @@
-import {Dimensions, FlatList, Image, View} from 'react-native';
-import React, {useEffect, useState} from "react";
-import {getImages} from "../../../utils/api";
+import {FlatList, Image, View} from 'react-native';
+import React from "react";
 import {gridStyles} from "../../../utils/styles";
 
-const Gallery = () => {
-    const [images, setImages] = useState<string[]>([]);
+interface GalleryProps {
+    images: string[];
+}
 
-    useEffect(() => {
-        getImages().then(async (res) => {
-            await setImages(res);
-        });
-    }, []);
-
-
-    const renderItem = ({ item }: { item: string }) => (
+const Gallery: React.FC<GalleryProps> = ({images}) => {
+    const renderItem = ({item}: { item: string }) => (
         <View style={gridStyles.item}>
-            <Image style={gridStyles.image} source={{ uri: item }} />
+            <Image style={gridStyles.image} source={{uri: item}}/>
         </View>
     );
 

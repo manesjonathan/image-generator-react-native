@@ -2,12 +2,19 @@ import React, {useState} from "react";
 import {Button, Image, StyleSheet, TextInput, View} from "react-native";
 import {generateImage} from "../../../utils/api";
 
-const Home = () => {
+
+interface HomeProps {
+    images: string[];
+    setImages: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const Home = ({images, setImages}: HomeProps) => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState("");
 
     const fetchImageUrl = async () => {
         generateImage(inputValue).then(async (res) => {
+            setImages([...images, res]);
             await setImageUrl(res);
         });
     };
