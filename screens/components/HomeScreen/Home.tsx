@@ -1,7 +1,6 @@
 import React, {useState} from "react";
-import {Button, Image, StyleSheet, TextInput, View} from "react-native";
+import {ActivityIndicator, Button, Image, StyleSheet, TextInput, View} from "react-native";
 import {generateImage} from "../../../utils/api";
-
 
 interface HomeProps {
     images: string[];
@@ -11,12 +10,16 @@ interface HomeProps {
 const Home = ({images, setImages}: HomeProps) => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const fetchImageUrl = async () => {
-        generateImage(inputValue).then(async (res) => {
-            setImages([...images, res]);
-            await setImageUrl(res);
-        });
+        setLoading(true);
+        generateImage(inputValue)
+            .then(async (res) => {
+                setImages([...images, res]);
+                await setImageUrl(res);
+            })
+            .finally(() => setLoading(false));
     };
 
     const handleInputChange = (text: string) => {
@@ -30,10 +33,13 @@ const Home = ({images, setImages}: HomeProps) => {
                 value={inputValue}
                 onChangeText={handleInputChange}
                 placeholder="Enter your query"
+                editable={!loading}
             />
             <Button title="Get Image" onPress={fetchImageUrl}/>
-            {imageUrl && (
-                <Image source={{uri: imageUrl}} style={styles.image}/>
+            {loading ? (
+                <ActivityIndicator style={styles.loader} size="large" color="#f97316"/>
+            ) : (
+                imageUrl && <Image source={{uri: imageUrl}} style={styles.image}/>
             )}
         </View>
     );
@@ -58,6 +64,9 @@ const styles = StyleSheet.create({
     image: {
         width: 200,
         height: 200,
+        marginTop: 20,
+    },
+    loader: {
         marginTop: 20,
     },
 });

@@ -8,7 +8,8 @@ import {PresentOptions, SetupParams} from "@stripe/stripe-react-native/lib/types
 
 export const initiatePayment = (p: {
     presentPaymentSheet: (options?: (PresentOptions | undefined)) => Promise<PresentPaymentSheetResult>;
-    initPaymentSheet: (params: SetupParams) => Promise<InitPaymentSheetResult>
+    initPaymentSheet: (params: SetupParams) => Promise<InitPaymentSheetResult>;
+    setLoading: (loading: boolean) => void;
 }) => {
 
     const fetchPaymentSheetParams = async () => {
@@ -32,6 +33,7 @@ export const initiatePayment = (p: {
     };
 
     const initializePaymentSheet = async () => {
+        p.setLoading(true);
         const {
             paymentIntent,
             ephemeralKey,
@@ -62,6 +64,7 @@ export const initiatePayment = (p: {
 
     initializePaymentSheet().then(() => {
             openPaymentSheet().then((message) => {
+                p.setLoading(false);
                 return message;
             });
         }

@@ -7,11 +7,13 @@ import {styles} from "../../../utils/styles";
 import GoogleLogin from "./GoogleLogin";
 import {Formik, FormikValues} from 'formik';
 import Toast from 'react-native-root-toast';
-import {SignupSchema} from "../../../utils/FormValidationSchema";
+import {LoginSchema} from "../../../utils/FormValidationSchema";
 import {SET_COOKIES} from "../../../utils/apiService";
 
 export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {
     const handleLogin = (values: FormikValues) => {
+        console.log('Login');
+
         login(values.email, values.password).then(async res => {
             if (res === null || res === undefined) {
                 Toast.show('Your email or password is incorrect', {
@@ -27,13 +29,17 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
         <ImageBackground source={require('../../../assets/images/bg.webp')} style={styles.container} resizeMode="cover">
             <Formik
                 initialValues={{email: '', password: ''}}
-                validationSchema={SignupSchema}
+                validationSchema={LoginSchema}
                 onSubmit={values => handleLogin(values)}>
                 {({
-                      errors, touched,
-                      handleChange, handleBlur,
-                      handleSubmit, values
+                      errors,
+                      touched,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                      values
                   }) => (
+
                     <View>
                         <Text style={styles.logo}>Image Generator</Text>
                         <View>
@@ -67,9 +73,12 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                             {(errors.password && touched.password) &&
                                 <Text style={styles.error}>{errors.password ? errors.password : ''}</Text>}
                         </View>
-                        <Button color={"#f97316"} onPress={() => {
+
+
+                        <Button title={'Login'} onPress={() => {
                             handleSubmit();
-                        }} title="LOGIN"/>
+                        }} color={'#f97316'}/>
+
 
                         <View style={styles.credentials}>
                             <Text style={styles.forgot} onPress={() => navigation.replace('Register')}> Create an
@@ -81,6 +90,7 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                     </View>
                 )}
             </Formik>
+
         </ImageBackground>
     );
 }
