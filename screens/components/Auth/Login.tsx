@@ -89,7 +89,7 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                                     account</Text>
                             </View>
                             <TouchableOpacity>
-                                <GoogleLogin navigation={navigation}/>
+                                <GoogleLogin navigation={navigation} setLoading={setLoading}/>
                             </TouchableOpacity>
                         </View>
                     )}

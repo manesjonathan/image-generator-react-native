@@ -10,9 +10,10 @@ import {SET_COOKIES} from "../../../utils/apiService";
 
 WebBrowser.maybeCompleteAuthSession();
 type GoogleSigningProps = {
-    navigation: any
+    navigation: any,
+    setLoading: any
 };
-const GoogleLogin = ({navigation}: GoogleSigningProps) => {
+const GoogleLogin = ({navigation, setLoading}: GoogleSigningProps) => {
 
     const [request, response, promptAsync] = Google.useAuthRequest({
         androidClientId: ANDROID_CLIENT_ID,
@@ -21,13 +22,16 @@ const GoogleLogin = ({navigation}: GoogleSigningProps) => {
     });
 
     useEffect(() => {
+
         if (response?.type === "success" && response.authentication !== null) {
             getUserInfo(response.authentication.accessToken);
+        } else {
 
         }
     }, [response]);
 
     const getUserInfo = (token: string) => {
+        setLoading(true);
         try {
             axios.get(
                 'https://www.googleapis.com/userinfo/v2/me',
@@ -37,9 +41,10 @@ const GoogleLogin = ({navigation}: GoogleSigningProps) => {
             ).then((res) => {
                 let email = res.data.email;
                 googleSignIn(res.data).then(async res => {
+                    setLoading(false);
                     await SET_COOKIES(res, email, navigation);
                 });
-            })
+            });
 
         } catch (error) {
             console.log(error);

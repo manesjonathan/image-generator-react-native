@@ -35,7 +35,7 @@ const Home = ({images, setImages}: HomeProps) => {
                 placeholder="Enter your query"
                 editable={!loading}
             />
-            <Button title="Get Image" onPress={fetchImageUrl}/>
+            <Button title="Get Image" onPress={fetchImageUrl} disabled={loading}/>
             {loading ? (
                 <ActivityIndicator style={styles.loader} size="large" color="#f97316"/>
             ) : (

@@ -12,6 +12,15 @@
       "resizeMode": "contain",
       "backgroundColor": "#333333"
     },
+    "plugins": [
+      [
+        "@stripe/stripe-react-native",
+        {
+          "merchantIdentifier": "merchant.com.manesjonathan.imagegenerator",
+          "enableGooglePay": true
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],

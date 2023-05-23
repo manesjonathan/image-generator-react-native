@@ -28,7 +28,7 @@ const Settings: React.FC<SettingsProps> = ({navigation}) => {
         <View style={styles.container}>
             <Text style={styles.welcomeText}>You can refill your account here!</Text>
             <View style={styles.buttonContainer}>
-                <Button title="1€ / 5 buckets" onPress={handleRefillAccount}/>
+                <Button title="1€ / 5 queries" onPress={handleRefillAccount}/>
             </View>
             {loading ? (
                 <ActivityIndicator style={styles.loader} size="large" color="#f97316"/>

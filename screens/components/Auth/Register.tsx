@@ -109,7 +109,7 @@ export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList
                                 </Text>
                             </View>
                             <TouchableOpacity>
-                                <GoogleLogin navigation={navigation}/>
+                                <GoogleLogin navigation={navigation} setLoading={setLoading}/>
                             </TouchableOpacity>
                         </View>
                     )}

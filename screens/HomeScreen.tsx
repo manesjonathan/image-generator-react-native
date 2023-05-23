@@ -24,7 +24,7 @@ const HomeScreen = () => {
         <StripeProvider
             publishableKey={STRIPE_PK_TEST}
             urlScheme="stripe-redirect"
-            merchantIdentifier="merchant.com.{com.manesjonathan.imagegenerator}"
+            merchantIdentifier="merchant.com.manesjonathan.imagegenerator"
         >
             <Tabs.Navigator initialRouteName="HomeScreen" screenOptions={{
                 tabBarStyle: {
