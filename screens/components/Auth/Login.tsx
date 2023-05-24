@@ -43,7 +43,6 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                           handleSubmit,
                           values
                       }) => (
-
                         <View>
                             <Text style={styles.logo}>Image Generator</Text>
                             <View>
@@ -77,12 +76,9 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                                 {(errors.password && touched.password) &&
                                     <Text style={styles.error}>{errors.password ? errors.password : ''}</Text>}
                             </View>
-
-
                             <Button title={'Login'} onPress={() => {
                                 handleSubmit();
                             }} color={'#f97316'}/>
-
 
                             <View style={styles.credentials}>
                                 <Text style={styles.forgot} onPress={() => navigation.replace('Register')}> Create an

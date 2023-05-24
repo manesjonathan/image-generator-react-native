@@ -26,17 +26,24 @@
     ],
     "ios": {
       "bundleIdentifier": "com.manesjonathan.imagegenerator",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#333333"
       },
-      "package": "com.manesjonathan.imagegenerator"
+      "package": "com.manesjonathan.imagegenerator",
+      "versionCode": 1
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b4b6529d-c451-41d5-a5d1-8836fcd129fe"
+      }
     }
   }
 }

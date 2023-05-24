@@ -3,7 +3,7 @@
   <h3 align="center">Image Generator</h3>
 
   <p align="center">
-    Image Generator Client using React Native
+    Dall-e Image Generator Client using React Native
     <br/>
     <br/>
     <a href="https://github.com/manesjonathan/image-generator-react-native/issues">Report Bug</a>
@@ -17,8 +17,56 @@
 
 ![Screen Shot](demo.gif)
 
-See [Image Generator API](https://github.com/manesjonathan/image-generator-.NET)
+See [Image Generator API in ASP .NET](https://github.com/manesjonathan/image-generator-.NET)
 
+### Built With
+- React Native
+- TypeScript
+- Expo
+
+## Getting Started
+To get a local copy up and running follow these simple steps.
+
+### Prerequisites
+* npm
+```sh
+npm install npm@latest -g
+```
+* expo
+```sh
+npm install expo-cli --global
+```
+* oAuth via Google Cloud Platform
+* Stripe account
+
+### Installation
+
+1. Clone the repo
+```sh
+git clone https://github.com/manesjonathan/image-generator-react-native.git
+```
+2. Go to the project folder
+```sh
+cd image-generator-react-native
+```
+3. Install NPM packages
+```sh
+npm install
+```
+4. Create a config.ts file in the utils folder and add the following code
+```sh
+export const URL:string = {API_URL};
+export const WEB_CLIENT_ID: string = {Google Cloud App Client ID};
+export const ANDROID_CLIENT_ID: string = {Google Cloud Android Client ID};
+export const IOS_CLIENT_ID: string =  {Google Cloud iOS Client ID};
+export const STRIPE_PK_TEST: string =  {Stripe PUBLIC_KEY};
+```
+
+
+3. Start the project
+```sh
+expo start
+```
 
 ## Contributing
 
