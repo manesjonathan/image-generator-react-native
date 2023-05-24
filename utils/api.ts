@@ -3,7 +3,7 @@ import * as SecureStore from "expo-secure-store";
 import {Platform} from "react-native";
 import Cookies from "js-cookie";
 import {GoogleResponse} from "./interfaces";
-import {API_URL} from "@env"
+import {API_URL} from "@env";
 
 export const login = async (email: string, password: string): Promise<string> => {
     return axios.post(API_URL + "/Auth/login", {
