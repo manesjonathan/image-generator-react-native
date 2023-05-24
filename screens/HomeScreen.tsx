@@ -7,7 +7,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomeComponent from "./components/HomeScreen/Home";
 import GalleryComponent from "./components/HomeScreen/Gallery";
 import SettingsComponent from "./components/HomeScreen/Settings";
-import {STRIPE_PK_TEST} from "../utils/config";
+import {STRIPE_PK_TEST} from "../utils/config.js";
 import {StripeProvider} from "@stripe/stripe-react-native";
 import {getImages} from "../utils/api";
 

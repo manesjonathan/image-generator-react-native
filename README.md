@@ -67,7 +67,7 @@ cd image-generator-react-native
 npm install
 ```
 
-4. Create a `config.ts` file in the `utils` folder and add the following code
+4. Create a `config.js` file in the `utils` folder and add the following code
 
 ```sh
 export const URL:string = {API_URL};

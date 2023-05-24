@@ -1,5 +1,5 @@
 import axios from "axios";
-import {URL} from "./config";
+import {URL} from "./config.js";
 import * as SecureStore from "expo-secure-store";
 import {Platform} from "react-native";
 import Cookies from "js-cookie";

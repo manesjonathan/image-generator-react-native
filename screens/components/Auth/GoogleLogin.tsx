@@ -3,7 +3,7 @@ import {Button, View} from "react-native";
 import {googleSignIn} from "../../../utils/api";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
-import {ANDROID_CLIENT_ID, IOS_CLIENT_ID, WEB_CLIENT_ID} from "../../../utils/config";
+import {ANDROID_CLIENT_ID, IOS_CLIENT_ID, WEB_CLIENT_ID} from "../../../utils/config.js";
 import axios from "axios";
 import {styles} from "../../../utils/styles";
 import {SET_COOKIES} from "../../../utils/apiService";

@@ -21,7 +21,6 @@
     "@stripe/stripe-react-native": "^0.27.2",
     "axios": "^1.4.0",
     "expo": "~48.0.15",
-    "expo-app-auth": "^12.0.0",
     "expo-application": "~5.1.1",
     "expo-auth-session": "~4.0.3",
     "expo-constants": "^14.2.1",
@@ -33,13 +32,11 @@
     "formik": "^2.2.9",
     "framer-motion": "^10.12.10",
     "js-cookie": "^3.0.5",
-    "lottie-react-native": "5.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.8.0",
     "react-native": "0.71.8",
     "react-native-gesture-handler": "^2.10.0",
-    "react-native-reanimated": "^3.1.0",
     "react-native-root-siblings": "^4.1.1",
     "react-native-root-toast": "^3.4.1",
     "react-native-safe-area-context": "^4.5.0",
@@ -47,7 +44,7 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.10",
     "yup": "^1.1.1",
-    "expo-modules-core": "~1.2.7"
+    "react-native-reanimated": "~3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -56,7 +53,6 @@
     "@types/react-native": "^0.72.0",
     "@types/react-native-vector-icons": "^6.4.13",
     "expo-dev-client": "^2.2.1",
-    "null-loader": "^4.0.1",
     "typescript": "^4.9.4"
   },
   "private": true

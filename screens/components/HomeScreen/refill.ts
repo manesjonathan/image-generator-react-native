@@ -3,11 +3,11 @@ import {Alert, Platform} from "react-native";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import {URL} from "../../../utils/config";
-import {PresentOptions, SetupParams} from "@stripe/stripe-react-native/lib/typescript/src/types/PaymentSheet";
+import {URL} from "../../../utils/config.js";
+import {SetupParams} from "@stripe/stripe-react-native/lib/typescript/src/types/PaymentSheet";
 
 export const initiatePayment = (p: {
-    presentPaymentSheet: (options?: (PresentOptions | undefined)) => Promise<PresentPaymentSheetResult>;
+    presentPaymentSheet: () => Promise<PresentPaymentSheetResult>;
     initPaymentSheet: (params: SetupParams) => Promise<InitPaymentSheetResult>;
     setLoading: (loading: boolean) => void;
 }) => {
