@@ -1,15 +1,14 @@
 import IconSettings from 'react-native-vector-icons/Feather';
 import IconGallery from 'react-native-vector-icons/Entypo';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 import React, {useEffect, useState} from "react";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import HomeComponent from "./components/HomeScreen/Home";
 import GalleryComponent from "./components/HomeScreen/Gallery";
 import SettingsComponent from "./components/HomeScreen/Settings";
-import {STRIPE_PK_TEST} from "../utils/config.js";
 import {StripeProvider} from "@stripe/stripe-react-native";
 import {getImages} from "../utils/api";
+import {STRIPE_PK_TEST} from "@env"
 
 const Tabs = createBottomTabNavigator();
 

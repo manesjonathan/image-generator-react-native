@@ -2,7 +2,7 @@ import {ActivityIndicator, Button, StyleSheet, Text, View} from "react-native";
 import React from "react";
 import {googleSignOut} from "../../../utils/api";
 import {NativeStackScreenProps} from "@react-navigation/native-stack";
-import {RootStackParamList} from "../../../utils/types";
+import {RootStackParamList} from "../../../types/root";
 import {initiatePayment} from "./refill";
 import {useStripe} from "@stripe/stripe-react-native";
 

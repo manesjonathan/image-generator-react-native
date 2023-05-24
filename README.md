@@ -67,14 +67,14 @@ cd image-generator-react-native
 npm install
 ```
 
-4. Create a `config.js` file in the `utils` folder and add the following code
+4. Create a `.env` file in the root folder and add the following code
 
 ```sh
-export const URL:string = {API_URL};
-export const WEB_CLIENT_ID: string = {Google Cloud App Client ID};
-export const ANDROID_CLIENT_ID: string = {Google Cloud Android Client ID};
-export const IOS_CLIENT_ID: string =  {Google Cloud iOS Client ID};
-export const STRIPE_PK_TEST: string =  {Stripe PUBLIC_KEY};
+API_URL={YOU_API_URL}
+WEB_CLIENT_ID={Google Cloud App Client ID}
+ANDROID_CLIENT_ID={Google Cloud Android Client ID}
+IOS_CLIENT_ID={Google Cloud iOS Client ID}
+STRIPE_PK_TEST={Stripe PUBLIC_KEY}
 ```
 
 5. Start the project

@@ -2,7 +2,7 @@ import React from 'react';
 import {ActivityIndicator, Button, ImageBackground, Text, TextInput, TouchableOpacity, View,} from 'react-native';
 import {register} from '../../../utils/api';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../utils/types';
+import {RootStackParamList} from "../../../types/root";
 import {styles} from "../../../utils/styles";
 import GoogleLogin from "./GoogleLogin";
 import {Formik, FormikValues} from "formik";

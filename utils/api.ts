@@ -1,13 +1,12 @@
 import axios from "axios";
-import {URL} from "./config.js";
 import * as SecureStore from "expo-secure-store";
 import {Platform} from "react-native";
 import Cookies from "js-cookie";
 import {GoogleResponse} from "./interfaces";
-
+import {API_URL} from "@env"
 
 export const login = async (email: string, password: string): Promise<string> => {
-    return axios.post(URL + "/Auth/login", {
+    return axios.post(API_URL + "/Auth/login", {
         email: email,
         password: password
     }, {
@@ -24,7 +23,7 @@ export const login = async (email: string, password: string): Promise<string> =>
 };
 
 export const register = async (email: string, password: string): Promise<string> => {
-    return axios.post(URL + "/Auth/register", {
+    return axios.post(API_URL + "/Auth/register", {
         email: email,
         username: email,
         password: password
@@ -38,7 +37,7 @@ export const register = async (email: string, password: string): Promise<string>
 };
 
 export const googleSignIn = async (response: GoogleResponse): Promise<string> => {
-    return axios.post(URL + '/Auth/google-signin', response)
+    return axios.post(API_URL + '/Auth/google-signin', response)
         .then((res) => {
             return res.data.token;
         });
@@ -68,7 +67,7 @@ export async function generateImage(inputValue: string) {
         }
     };
     try {
-        const response = await axios.post(URL + '/Image/generate', {
+        const response = await axios.post(API_URL + '/Image/generate', {
             prompt: inputValue
         }, config);
         return response.data;
@@ -88,7 +87,7 @@ export const getImages = async () => {
             'Authorization': `Bearer ${token}`
         }
     };
-    return axios.get(URL + '/Image/images', config).then((res) => {
+    return axios.get(API_URL + '/Image/images', config).then((res) => {
         return res.data;
     });
 }

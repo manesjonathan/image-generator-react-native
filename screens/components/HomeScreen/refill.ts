@@ -3,8 +3,8 @@ import {Alert, Platform} from "react-native";
 import Cookies from "js-cookie";
 import * as SecureStore from "expo-secure-store";
 import axios from "axios";
-import {URL} from "../../../utils/config.js";
 import {SetupParams} from "@stripe/stripe-react-native/lib/typescript/src/types/PaymentSheet";
+import {API_URL} from "@env"
 
 export const initiatePayment = (p: {
     presentPaymentSheet: () => Promise<PresentPaymentSheetResult>;
@@ -15,7 +15,7 @@ export const initiatePayment = (p: {
     const fetchPaymentSheetParams = async () => {
         console.log("Fetching payment sheet params");
         const email = Platform.OS === 'web' ? Cookies.get('userEmail') : await SecureStore.getItemAsync('userEmail');
-        const response = await axios.post(URL + '/create-payment-intent', {
+        const response = await axios.post(API_URL + '/create-payment-intent', {
             email: email,
         }, {
             headers: {
