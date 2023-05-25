@@ -7,7 +7,7 @@ import {styles} from "../../../utils/styles";
 import GoogleLogin from "./GoogleLogin";
 import {Formik, FormikValues} from 'formik';
 import Toast from 'react-native-root-toast';
-import {LoginSchema} from "../../../utils/FormValidationSchema";
+import {LoginSchema} from "../../../utils/formValidationSchema";
 import {SET_COOKIES} from "../../../utils/apiService";
 
 export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Login'>) => {

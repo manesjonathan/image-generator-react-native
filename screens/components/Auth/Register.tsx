@@ -7,7 +7,7 @@ import {styles} from "../../../utils/styles";
 import GoogleLogin from "./GoogleLogin";
 import {Formik, FormikValues} from "formik";
 import Toast from "react-native-root-toast";
-import {RegisterSchema} from "../../../utils/FormValidationSchema";
+import {RegisterSchema} from "../../../utils/formValidationSchema";
 import {SET_COOKIES} from "../../../utils/apiService";
 
 export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList, 'Register'>) => {
