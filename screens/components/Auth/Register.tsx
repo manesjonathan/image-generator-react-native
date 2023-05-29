@@ -21,10 +21,11 @@ export const Register = ({navigation}: NativeStackScreenProps<RootStackParamList
                 Toast.show('There is a problem with your registration', {
                     duration: Toast.durations.LONG,
                 });
+                setLoading(false);
                 return;
             }
-            await SET_COOKIES(res, values.email, navigation);
             setLoading(false);
+            await SET_COOKIES(res, values.email, navigation);
         });
     };
 

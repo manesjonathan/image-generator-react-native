@@ -19,6 +19,7 @@ export const Login = ({navigation}: NativeStackScreenProps<RootStackParamList, '
                 Toast.show('Your email or password is incorrect', {
                     duration: Toast.durations.LONG,
                 });
+                setLoading(false);
                 return;
             }
             setLoading(false);
